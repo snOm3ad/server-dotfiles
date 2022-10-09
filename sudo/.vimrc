@@ -3,7 +3,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/fzf.vim'
-Plug '/usr/bin/fzf'
+Plug 'junegunn/fzf'
 Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
@@ -19,9 +19,6 @@ noremap <RIGHT>     <NOP>
 " Moving the viewport up and down in normal mode.
 nmap <C-j> <C-e>
 nmap <C-k> <C-y>
-
-" NOTE check if this is needed. - I still have no idea.
-set rtp+=/usr/local/opt/fzf
 
 " Fold lines within a file
 set foldmethod=manual
