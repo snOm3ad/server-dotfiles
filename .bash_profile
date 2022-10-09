@@ -3,11 +3,17 @@ export EDITOR='nvim'
 export CARGO_TARGET_DIR="${HOME}/.rust-builds/"
 export TERM='xterm-256color'
 
+# Functions
 gotodir () {
     cd $(fd . ~/dev/rust/ -t d --max-depth=3 | fzf)
 }
 
 
+# Source .bashrc from here
+[[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
+
+
+# PS1 Customizing
 COLOR=39
 ## NOTE: this will only work in bash!
 # \e[x;ym \e[m

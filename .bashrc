@@ -44,7 +44,6 @@ fi
 
 # Source other `.bash_` files
 [[ -f "$HOME/.bash_aliases" ]] && . "$HOME/.bash_aliases"
-[[ -f "$HOME/.bash_profile" ]] && . "$HOME/.bash_profile"
 
 # Source cargo env file
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
