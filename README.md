@@ -7,3 +7,26 @@ A `.vimrc` file for both sudo and non-sudo users, I believe what's different is 
 - .tcshrc
 
 It also contains a `nvim` folder which you can directly copy into `mkdir ~/.config && cp -R nvim "$_"` which will give you access to coc config file and `init.vim` which sources the `.vimrc` file contained in the `.vim` folder.
+
+## Guide for New Installations in VMs
+First install `nvim`
+
+```bash
+sudo apt update && sudo apt install neovim
+```
+
+Then install `npm`
+
+```bash
+sudo apt install npm
+```
+
+Then install `node`, this is required to run `coc` in neovim
+
+```bash
+npm install node -g
+```
+
+Once everything is finished copy the `.vimrc` file into the `$HOME/.vim/` folder, then move the `nvim` folder into `$HOME/.config/` folder. Then run `nvim` and run `:CocInstall` which will install all of the plugins in the `.vimrc` file.
+
+If everything succeeds, then you are ready to install `rust-analyzer` which you'll have to google because this process is changing as you're reading this.
