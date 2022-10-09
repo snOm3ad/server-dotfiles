@@ -3,10 +3,12 @@ export EDITOR='nvim'
 export CARGO_TARGET_DIR='~/.rust-builds/'
 export TERM='xterm-256color'
 
+gotodir () {
+    cd $(fd . ~/dev/rust/ -t d --max-depth=3 | fzf)
+}
 
 
 COLOR=39
-
 ## NOTE: this will only work in bash!
 # \e[x;ym \e[m
 # \e[   starts color scheme
