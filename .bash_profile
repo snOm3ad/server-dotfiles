@@ -1,6 +1,6 @@
 export PROMPT_DIRTRIM=2
 export EDITOR='nvim'
-export CARGO_TARGET_DIR='~/.rust-builds/'
+export CARGO_TARGET_DIR="${HOME}/.rust-builds/"
 export TERM='xterm-256color'
 
 gotodir () {
