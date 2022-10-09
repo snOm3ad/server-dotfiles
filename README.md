@@ -3,6 +3,7 @@ A `.vimrc` file for both sudo and non-sudo users, I believe what's different is 
 
 - .bashrc
 - .bash_profile
+- .bash_aliases
 - .tmux.conf
 - .tcshrc
 

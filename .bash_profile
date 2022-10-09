@@ -7,6 +7,7 @@ export TERM='xterm-256color'
 
 COLOR=39
 
+## NOTE: this will only work in bash!
 # \e[x;ym \e[m
 # \e[   starts color scheme
 # x;y   color pair to use.
