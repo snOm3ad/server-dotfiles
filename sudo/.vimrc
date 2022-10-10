@@ -153,9 +153,11 @@ let g:rustfmt_autosave=1
 nmap <silent><C-p> :call fzf#run({ 'source': 'git ls-tree -r HEAD --name-only', 'sink': 'tabedit', 'down': '30%' })<CR>
 nmap <silent><C-o>  :execute 'Buffers'<CR>
 
+" Coc nvim mappings
+nmap <silent> gd <Plug>(coc-definition)
+
 " Copy to clipboard
 vnoremap  <Leader>y  "+y
-
 
 " [Buffers] Jump to the existing tab/window if possible
 " SEE: https://github.com/junegunn/fzf.vim/issues/98
