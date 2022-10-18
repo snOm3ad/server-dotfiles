@@ -139,7 +139,7 @@ colorscheme base16-gruvbox-dark-hard
 hi Normal guibg=NONE ctermbg=NONE
 
 " Link python3 to vim
-let g:python3_host_prog='/usr/local/bin/python3'
+let g:python3_host_prog='/usr/bin/python3'
 let g:python_highlight_all=1
 
 " Insert current line below and above the current line.
@@ -155,8 +155,12 @@ nmap <silent><C-o>  :execute 'Buffers'<CR>
 
 " Coc nvim mappings
 nmap <silent> gd <Plug>(coc-definition)
+inoremap <silent><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+inoremap <silent><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+
 
 " Copy to clipboard
+set clipboard+=unnamedplus
 vnoremap  <Leader>y  "+y
 
 " [Buffers] Jump to the existing tab/window if possible
