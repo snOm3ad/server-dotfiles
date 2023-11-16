@@ -20,6 +20,6 @@ export TERM='xterm-256color'
 # 38;5; sequence start for the foreground
 # 48;5; sequence start for the background
 case "$TERM" in
-    *256color | alacritty) export PS1="PS1='[\[\e[38;5;39m\]\t\[\e[0m\]] \[\e[1m\]\h \[\e[0;38;5;38m\]\W \[\e[0m\]\$ '" ;;
+    *256color | alacritty) export PS1="[\[\e[38;5;39m\]\t\[\e[0m\]] \[\e[1m\]\h \[\e[0;38;5;38m\]\W \[\e[0m\]\$ " ;;
     *) export PS1="[\t] \[\e[1m\]\h \[\e[0m\]\W \$ " ;;
 esac
