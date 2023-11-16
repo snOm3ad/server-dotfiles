@@ -2,11 +2,33 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Source other `.bash_` files
+[[ -f "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
+
+# Source cargo env file
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
+
+# Utility functions
+whichdev() {
+    { fd . -t d --max-depth=4 --base-directory="$HOME/dev/"; echo "dev/"; } | sort | fzf 
+}
+
+gotodir () {
+    TARGETDIR="$(whichdev)"
+    case $TARGETDIR in
+        dev/) cd "$HOME/dev/" ;;
+        "") ;;
+        *) cd "$HOME/dev/$TARGETDIR" ;;
+    esac
+}
+
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -41,9 +63,3 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# Source other `.bash_` files
-[[ -f "$HOME/.bash_aliases" ]] && . "$HOME/.bash_aliases"
-
-# Source cargo env file
-[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"

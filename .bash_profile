@@ -4,22 +4,6 @@ export EDITOR='nvim'
 export CARGO_TARGET_DIR="${HOME}/.rust-builds/"
 export TERM='xterm-256color'
 
-whichdev() {
-    { fd . -t d --max-depth=4 --base-directory="$HOME/dev/"; echo "dev/"; } | sort | fzf 
-}
-
-# Functions
-gotodir () {
-    TARGETDIR="$(whichdev)"
-    case $TARGETDIR in
-        dev/) cd "$HOME/dev/" ;;
-        "") ;;
-        *) cd "$HOME/dev/$TARGETDIR" ;;
-    esac
-    cd $(fd . ~/dev/rust/ -t d --max-depth=3 | fzf)
-}
-
-
 # Source .bashrc from here
 [[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
 
