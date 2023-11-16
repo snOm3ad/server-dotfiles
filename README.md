@@ -5,10 +5,18 @@ A `.vimrc` file for both sudo and non-sudo users, I believe what's different is 
 - .bash_profile
 - .bash_aliases
 - .tmux.conf
+- setup.sh
 
 It also contains a `nvim` folder which you can directly copy into `mkdir ~/.config && cp -R nvim "$_"` which will give you access to coc config file and `init.vim` which sources the `.vimrc` file contained in the `.vim` folder.
 
-## Guide for New Installations in VMs
+
+## New Guide for Fresh Installations in VMs
+The first thing you need to do is set some required environment variables `GHTOKEN` is used to fetch the lua neovim config files from the private repository.
+
+Once this is done run `chmod +x setup.sh && ./setup.sh` and wait for everything to get setup.
+
+
+## Guide for New Installations in VMs (Deprecated)
 First install `nvim`
 
 ```bash
