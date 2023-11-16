@@ -1,1 +1,0 @@
-alias dot-fm '/encs/bin/git --git-dir=$HOME/.cfgs/ --work-tree=$HOME'

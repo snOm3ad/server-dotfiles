@@ -5,7 +5,6 @@ A `.vimrc` file for both sudo and non-sudo users, I believe what's different is 
 - .bash_profile
 - .bash_aliases
 - .tmux.conf
-- .tcshrc
 
 It also contains a `nvim` folder which you can directly copy into `mkdir ~/.config && cp -R nvim "$_"` which will give you access to coc config file and `init.vim` which sources the `.vimrc` file contained in the `.vim` folder.
 
