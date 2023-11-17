@@ -69,6 +69,7 @@ install "git-delta"
 install "tmux"
 install "snapd"
 install "ppa-purge"
+install "pkg-config"
 
 print "INSTALLING LLVM"
 llvm_setup && 
