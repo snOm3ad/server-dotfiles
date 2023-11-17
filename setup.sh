@@ -46,7 +46,7 @@ llvm_setup() {
     add-apt-repository "deb http://apt.llvm.org/$CODENAME/ llvm-toolchain-$CODENAME main"
 }
 
-python3_venv() {
+python3_modules() {
     # check if python3 is installed.
     [ -z "$(which python3)" ] && fail "python3 is required, however it was not found"
     # make .venv dir
@@ -58,6 +58,10 @@ python3_venv() {
         install "python$VERSION-venv" &&
         python3 -m venv neovim || 
         fail "Could not create python3 virtual environment"
+
+    [ -n "$VERSION" ] &&
+        install "python$VERSION-pip" ||
+        fail "Could not install pip3"
 }
 
 print "INSTALLING MISC PACKAGES"
@@ -110,8 +114,8 @@ print "INSTALLING DOT FILES"
 mv .bash* .tmux.conf "$HOME/"
 
 # required for neovim
-print "INSTALLING PYTHON VENV"
-python3_venv
+print "INSTALLING PYTHON MODULES"
+python3_modules # pip and venv
 
 print "INSTALLING NEOVIM CONFIG"
 mkdir -p "$HOME/.config/nvim" &&
