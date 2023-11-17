@@ -1,9 +1,9 @@
 #!/bin/bash
 
 print() {
-    printf '=%.0s' {1..10}
+    printf '=%.0s' {1..15}
     printf " $1 "
-    printf '=%.0s' {1..10}
+    printf '=%.0s' {1..15}
     printf '\n'
 }
 
@@ -55,7 +55,7 @@ python3_venv() {
     # get python3 version
     VERSION="$(python3 --version | python3 -c 'import sys; v = [line.split() for line in sys.stdin]; _, v = v[0]; print(".".join(v.split(".")[:-1]))' )"
     [ -n "$VERSION" ] && 
-        install "python$PYTHON_VERSION-venv" &&
+        install "python$VERSION-venv" &&
         python3 -m venv neovim || 
         fail "Could not create python3 virtual environment"
 }
@@ -96,11 +96,11 @@ print "INSTALLING WASM STUFF"
 install "libclang-rt-dev-wasm32" &&
     install "libclang-rt-dev-wasm64" &&
     install "libc++-dev-wasm32" &&
-    install "libc++abi-dev-wasm32" &&
+    install "libc++abi-16-dev-wasm32" &&
     install "libclang-rt-dev-wasm32" &&
     install "libclang-rt-dev-wasm64"
 
-neovim_beta "neovim"
+neovim_beta "nvim"
 
 print "INSTALLING TMUX-DEV SCRIPT"
 scripts
