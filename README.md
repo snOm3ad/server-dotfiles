@@ -1,13 +1,11 @@
 # Files Contained
-A `.vimrc` file for both sudo and non-sudo users, I believe what's different is the availability of `fzf`. Since non-sudo users have no access to `apt`, then its harder for them to install programs that may be required for some of the plugins I use.
+This is meant to provide a prêt-à-monter config. It provides initialization files for `bash` as well as a configuration file for `tmux` the crux of the whole repo is contained in the `setup.sh`. Which is meant to provide a way for you to quickly install pretty much everything you might need in order to starting working on a *new* machine.
 
 - .bashrc
 - .bash_profile
 - .bash_aliases
 - .tmux.conf
 - setup.sh
-
-It also contains a `nvim` folder which you can directly copy into `mkdir ~/.config && cp -R nvim "$_"` which will give you access to coc config file and `init.vim` which sources the `.vimrc` file contained in the `.vim` folder.
 
 
 ## New Guide for Fresh Installations in VMs
