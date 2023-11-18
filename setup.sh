@@ -58,7 +58,7 @@ python3_modules() {
     mkdir -p "$HOME/.venvs/" && cd "$HOME/.venvs/"
     
     # get python3 version
-    VERSION="$(python3 --version | python3 -c 'import sys; v = [line.split() for line in sys.stdin]; _, v = v[0]; print(".".join(v.split(".")[:-1]))' )"
+    VERSION="$(python3 --version | python3 -c 'import sys; v = [l.split() for l in sys.stdin]; _, v = v[0]; print(".".join(v.split(".")[:-1]))' )"
     [ -n "$VERSION" ] && 
         install "python$VERSION-venv" &&
         python3 -m venv neovim || 
@@ -75,6 +75,7 @@ install "tmux"
 install "snapd"
 install "ppa-purge"
 install "pkg-config"
+install "m4" # required by spidermonkey
 
 print "INSTALLING LLVM"
 llvm_setup && 
