@@ -76,6 +76,7 @@ install "snapd"
 install "ppa-purge"
 install "pkg-config"
 install "m4" # required by spidermonkey
+install "unzip"
 
 print "INSTALLING LLVM"
 llvm_setup && 
