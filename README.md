@@ -5,6 +5,7 @@ This is meant to provide a prêt-à-monter config. It provides initialization fi
 - .bash_profile
 - .bash_aliases
 - .tmux.conf
+- .gitconfig
 - setup.sh
 
 
