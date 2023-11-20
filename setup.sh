@@ -26,9 +26,25 @@ clone_private_repo() {
     git clone "https://oauth2:$GHTOKEN@github.com/snOm3ad/dot-nvim-lua" .
 }
 
-neovim_beta() {
-    print "INSTALLING $1"
-    sudo snap install --beta "$1" --classic || fail "Could not install $1"
+neovim() {
+    mkdir -p "$HOME/.local/share" && cd "$HOME/.local/share"
+
+    ROOT="https://github.com/neovim/neovim/releases/download/stable"
+    RELEASE="nvim-linux64.tar.gz"
+    curl -L -O "$ROOT/$RELEASE" && 
+        curl -L -O "$ROOT/$RELEASE.sha256sum" || 
+        fail "Failed to download files from '$ROOT'"
+    
+    # verify and untar
+    sha256sum -c "$RELEASE.sha256sum" &&
+        tar xzvf $RELEASE || 
+        fail "Could not untar downloaded file"
+
+    # remove downloaded files
+    rm "$RELEASE" "$RELEASE.sha256sum"
+    
+    # link untar files to bin
+    sudo ln -sf "$HOME/.local/share/nvim-linux64/bin/nvim" "/usr/local/bin/nvim" || fail "Could not create symbolic link to nvim binary"
 }
 
 llvm_setup() {
@@ -108,7 +124,8 @@ install "libclang-rt-dev-wasm32" &&
     install "libclang-rt-dev-wasm32" &&
     install "libclang-rt-dev-wasm64"
 
-neovim_beta "nvim"
+print "INSTALLING LATEST NEOVIM"
+neovim
 
 print "INSTALLING TMUX-DEV SCRIPT"
 scripts
