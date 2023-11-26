@@ -117,6 +117,10 @@ install "libclang-rt-dev" &&
     install "libc++abi-dev" &&
     install "libunwind-dev"
 
+print "INSTALLING MLIR"
+install "libmlir-16-dev" &&
+    install "mlir-16-tools"
+
 print "INSTALLING WASM STUFF"
 install "libclang-rt-dev-wasm32" &&
     install "libclang-rt-dev-wasm64" &&
