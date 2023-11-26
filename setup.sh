@@ -91,6 +91,7 @@ install "tmux"
 install "snapd"
 install "ppa-purge"
 install "pkg-config"
+install "cmake"
 install "m4" # required by spidermonkey
 install "unzip"
 
