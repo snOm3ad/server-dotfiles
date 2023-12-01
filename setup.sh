@@ -43,7 +43,7 @@ neovim() {
     # remove downloaded files
     rm "$RELEASE" "$RELEASE.sha256sum"
     
-    # link untar files to bin
+    # link untarred files to bin
     sudo ln -sf "$HOME/.local/share/nvim-linux64/bin/nvim" "/usr/local/bin/nvim" || fail "Could not create symbolic link to nvim binary"
 }
 
@@ -66,18 +66,15 @@ python3_modules() {
     # check if python3 is installed.
     [ -z "$(which python3)" ] && fail "python3 is required, however it was not found"
     
-    # install pip
-    install "python3-pip" ||
-        fail "Could not install pip3"
+    # install everything.
+    install "python3-full" ||
+        fail "Could not install full modules of python"
 
     # make .venv dir
     mkdir -p "$HOME/.venvs/" && cd "$HOME/.venvs/"
     
-    # get python3 version
-    VERSION="$(python3 --version | python3 -c 'import sys; v = [l.split() for l in sys.stdin]; _, v = v[0]; print(".".join(v.split(".")[:-1]))' )"
-    [ -n "$VERSION" ] && 
-        install "python$VERSION-venv" &&
-        python3 -m venv neovim || 
+    # python3 venv
+    python3 -m venv neovim || 
         fail "Could not create python3 virtual environment"
 }
 
