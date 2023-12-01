@@ -59,7 +59,7 @@ llvm_setup() {
         fail "Could not add gpg key"
 
     # add repository
-    add-apt-repository "deb http://apt.llvm.org/$CODENAME/ llvm-toolchain-$CODENAME main"
+    sudo add-apt-repository "deb http://apt.llvm.org/$CODENAME/ llvm-toolchain-$CODENAME main"
 }
 
 python3_modules() {
