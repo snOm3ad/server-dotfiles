@@ -23,7 +23,7 @@ scripts() {
 
 clone_private_repo() {
     [ -z "$GHTOKEN" ] && fail "GHTOKEN environment variable not set"
-    git clone "https://oauth2:$GHTOKEN@github.com/snOm3ad/dot-nvim-lua" .
+    git clone "https://snom3ad:$GHTOKEN@github.com/snOm3ad/dot-nvim-lua" .
 }
 
 neovim() {
@@ -92,39 +92,42 @@ install "cmake"
 install "m4" # required by spidermonkey
 install "unzip"
 
-print "INSTALLING LLVM"
-llvm_setup && 
-    install "lld" &&
-    install "lldb" &&
-    install "llvm" && 
-    install "llvm-dev" &&
-    install "llvm-runtime" &&
+print "ADDING LLVM REPOSITORY"
+llvm_setup
+
+print "FETCHING LLVM LATEST STABLE VERSION"
+LLVM_VERSION=$(curl -L -O 'https://apt.llvm.org/llvm.sh' | grep -m 1 "CURRENT_LLVM_STABLE" - | awk -F= '{ print $2 }')
+
+print "INSTALLING LLVM-$LLVM_VERSION"
+install "lld-$LLVM_VERSION" &&
+    install "lldb-$LLVM_VERSION" &&
+    install "llvm-$LLVM_VERSION" && 
+    install "llvm-$LLVM_VERSION-dev" &&
+    install "llvm-$LLVM_VERSION-runtime" &&
 
 print "INSTALLING CLANG SUITE"
-install "clang" && 
-    install "clangd" &&
-    install "clang-format" && 
-    install "clang-tidy" &&
-    install "clang-tools" &&
-    install "python3-clang"
+install "clang-$LLVM_VERSION" && 
+    install "clangd-$LLVM_VERSION" &&
+    install "clang-format-$LLVM_VERSION" && 
+    install "clang-tidy-$LLVM_VERSION" &&
+    install "clang-tools-$LLVM_VERSION" &&
+    install "python3-clang-$LLVM_VERSION"
 
 print "INSTALLING C-LIBS"
-install "libclang-rt-dev" &&
-    install "libc++-dev" &&
-    install "libc++abi-dev" &&
-    install "libunwind-dev"
+install "libclang-rt-$LLVM_VERSION-dev" &&
+    install "libc++-$LLVM_VERSION-dev" &&
+    install "libc++abi-$LLVM_VERSION-dev" &&
+    install "libunwind-$LLVM_VERSION-dev"
 
 print "INSTALLING MLIR"
-install "libmlir-16-dev" &&
-    install "mlir-16-tools"
+install "libmlir-$LLVM_VERSION-dev" &&
+    install "mlir-$LLVM_VERSION-tools"
 
 print "INSTALLING WASM STUFF"
-install "libclang-rt-dev-wasm32" &&
-    install "libclang-rt-dev-wasm64" &&
-    install "libc++-dev-wasm32" &&
-    install "libc++abi-16-dev-wasm32" &&
-    install "libclang-rt-dev-wasm32" &&
-    install "libclang-rt-dev-wasm64"
+install "libclang-rt-$LLVM_VERSION-dev-wasm32" &&
+    install "libclang-rt-$LLVM_VERSION-dev-wasm64" &&
+    install "libc++-$LLVM_VERSION-dev-wasm32" &&
+    install "libc++abi-$LLVM_VERSION-dev-wasm32" &&
 
 print "INSTALLING LATEST NEOVIM"
 neovim
@@ -133,7 +136,9 @@ print "INSTALLING TMUX-DEV SCRIPT"
 scripts
 
 print "INSTALLING DOT FILES"
-mv .bash* .tmux.conf .gitconfig "$HOME/"
+mv .bash* "$HOME/"
+mv .tmux.conf "$HOME/"
+mv .gitconfig "$HOME/"
 
 # required for neovim
 print "INSTALLING PYTHON MODULES"
