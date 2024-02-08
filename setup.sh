@@ -22,7 +22,7 @@ scripts() {
 }
 
 clone_private_repo() {
-    [ -z "$GHTOKEN" ] && fail "GHTOKEN environment variable not set"
+    [[ -z "$GHTOKEN" ]] && fail "GHTOKEN environment variable not set"
     git clone "https://snom3ad:$GHTOKEN@github.com/snOm3ad/dot-nvim-lua" .
 }
 
@@ -50,21 +50,29 @@ neovim() {
 llvm_setup() {
     # get ubuntu codename
     CODENAME="$(lsb_release -c | tail | awk '{ print $2 }' )"
-    [ -z "$CODENAME" ] && fail "Could not fetch codename for this distro"
+    [[ -z "$CODENAME" ]] && fail "Could not fetch codename for this distro"
 
     # get the gpg key
-    curl -O -L 'https://apt.llvm.org/llvm-snapshot.gpg.key' && 
-        sudo apt-key add 'llvm-snapshot.gpg.key' && 
-        rm 'llvm-snapshot.gpg.key' ||
-        fail "Could not add gpg key"
+    curl -O -L 'https://apt.llvm.org/llvm-snapshot.gpg.key' || fail "Could not download gpg key"
 
+    # more info in `man sources.list`
+    [[ -d "/usr/share/keyrings" ]] || mkdir -p "/usr/share/keyrings/"
+
+    # add key
+    LLVM_SNAPSHOT="/usr/share/keyrings/llvm-snapshot.gpg"
+    sudo gpg -o "$LLVM_SNAPSHOT" --dearmor "llvm-snapshot.gpg.key" && 
+        sudo chmod a+r "$LLVM_SNAPSHOT" || 
+        fail "Could not dearmor llvm-snapshot key"
+    
     # add repository
-    sudo add-apt-repository "deb http://apt.llvm.org/$CODENAME/ llvm-toolchain-$CODENAME main"
+    KEYRING="/etc/apt/sources.list.d/llvm-snapshot.list"
+    echo "deb [signed-by=$LLVM_SNAPSHOT] http://apt.llvm.org/$CODENAME llvm-toolchain-$CODENAME main" | sudo tee "$KEYRING"
+    sudo apt update
 }
 
 python3_modules() {
     # check if python3 is installed.
-    [ -z "$(which python3)" ] && fail "python3 is required, however it was not found"
+    [[ -z "$(which python3)" ]] && fail "python3 is required, however it was not found"
     
     # install everything.
     install "python3-full" ||
@@ -83,7 +91,7 @@ install "nodejs"
 install "fd-find"
 install "ripgrep"
 install "fzf"
-install "git-delta"
+#install "git-delta"
 install "tmux"
 install "snapd"
 install "ppa-purge"
@@ -95,8 +103,11 @@ install "unzip"
 print "ADDING LLVM REPOSITORY"
 llvm_setup
 
-print "FETCHING LLVM LATEST STABLE VERSION"
-LLVM_VERSION=$(curl -L -O 'https://apt.llvm.org/llvm.sh' | grep -m 1 "CURRENT_LLVM_STABLE" - | awk -F= '{ print $2 }')
+if [ -z "$LLVM_VERSION" ]; then
+    print "FETCHING LLVM LATEST STABLE VERSION"
+    LLVM_VERSION=$(curl -L -O 'https://apt.llvm.org/llvm.sh' && grep -m 1 "CURRENT_LLVM_STABLE" "llvm.sh" | awk -F= '{ print $2 }')
+    [[ -z "$LLVM_VERSION" ]] && fail "Please set LLVM_VERSION variable before running"
+fi
 
 print "INSTALLING LLVM-$LLVM_VERSION"
 install "lld-$LLVM_VERSION" &&
@@ -136,9 +147,9 @@ print "INSTALLING TMUX-DEV SCRIPT"
 scripts
 
 print "INSTALLING DOT FILES"
-mv .bash* "$HOME/"
-mv .tmux.conf "$HOME/"
-mv .gitconfig "$HOME/"
+mv ".bash"* "$HOME/"
+mv ".tmux.conf" "$HOME/"
+mv ".gitconfig" "$HOME/"
 
 # required for neovim
 print "INSTALLING PYTHON MODULES"
